@@ -1,8 +1,14 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { scrollToElement } from "@/lib/utils";
 
 export default function HowItWorks() {
+  const handleScrollToSection = (sectionId: string) => (e: React.MouseEvent) => {
+    e.preventDefault();
+    scrollToElement(sectionId, 80); // 80px offset for header
+  };
+  
   const steps = [
     {
       icon: "fa-keyboard",
@@ -49,7 +55,7 @@ export default function HowItWorks() {
           <div className="mt-8 pt-6 border-t border-neutral-200 text-center">
             <p className="text-neutral-600 mb-4">Powered by advanced natural language processing technology</p>
             <Button variant="link" className="text-primary hover:text-primary-dark font-medium" asChild>
-              <a href="#search-section" className="inline-flex items-center">
+              <a href="#search-section" onClick={handleScrollToSection('search-section')} className="inline-flex items-center">
                 Try it now <i className="fas fa-arrow-right ml-2"></i>
               </a>
             </Button>
