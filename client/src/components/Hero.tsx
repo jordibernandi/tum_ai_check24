@@ -2,9 +2,15 @@ import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import useMobile from "@/hooks/use-mobile";
+import { scrollToElement } from "@/lib/utils";
 
 export default function Hero() {
   const isMobile = useMobile();
+  
+  const handleScrollToSection = (sectionId: string) => (e: React.MouseEvent) => {
+    e.preventDefault();
+    scrollToElement(sectionId, 80); // 80px offset to account for header height
+  };
   
   return (
     <section className="mb-10 bg-gradient-to-r from-primary to-primary-dark rounded-xl overflow-hidden shadow-lg">
@@ -27,7 +33,7 @@ export default function Hero() {
               className="bg-secondary hover:bg-secondary-dark text-white font-semibold"
               asChild
             >
-              <a href="#search-section">Start Searching</a>
+              <a href="#search-section" onClick={handleScrollToSection('search-section')}>Start Searching</a>
             </Button>
             <Button
               variant="ghost"
@@ -35,7 +41,7 @@ export default function Hero() {
               className="text-white hover:text-primary-light transition-colors duration-200"
               asChild
             >
-              <a href="#how-it-works" className="flex items-center">
+              <a href="#how-it-works" onClick={handleScrollToSection('how-it-works')} className="flex items-center">
                 <span>How it works</span>
                 <i className="fas fa-chevron-right ml-2 text-xs"></i>
               </a>
