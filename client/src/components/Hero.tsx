@@ -36,9 +36,9 @@ export default function Hero() {
               <a href="#search-section" onClick={handleScrollToSection('search-section')}>Start Searching</a>
             </Button>
             <Button
-              variant="ghost"
+              variant="outline"
               size={isMobile ? "default" : "lg"}
-              className="text-white hover:text-primary-light transition-colors duration-200"
+              className="text-white border-white hover:bg-white hover:text-primary transition-all duration-200"
               asChild
             >
               <a href="#how-it-works" onClick={handleScrollToSection('how-it-works')} className="flex items-center">

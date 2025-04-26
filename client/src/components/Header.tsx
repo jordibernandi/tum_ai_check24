@@ -1,11 +1,14 @@
 import { Link } from "wouter";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import useMobile from "@/hooks/use-mobile";
+import { Menu, X } from "lucide-react";
 
 export default function Header() {
   const isMobile = useMobile();
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
     const handleScroll = () => {
@@ -15,6 +18,28 @@ export default function Header() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+  
+  useEffect(() => {
+    // Close mobile menu when clicking outside
+    const handleClickOutside = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setMobileMenuOpen(false);
+      }
+    };
+    
+    if (mobileMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [mobileMenuOpen]);
+  
+  // Toggle mobile menu
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
 
   return (
     <header className={`bg-white sticky top-0 z-50 transition-shadow duration-300 ${scrolled ? 'shadow-md' : 'shadow-sm'}`}>
@@ -34,35 +59,83 @@ export default function Header() {
           </Link>
         </div>
         
-        <nav>
-          <ul className="flex space-x-6 items-center">
-            {!isMobile && (
-              <>
-                <li>
-                  <Link href="/">
-                    <span className="text-neutral-600 hover:text-primary transition-colors duration-200 cursor-pointer">Hotels</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/">
-                    <span className="text-neutral-600 hover:text-primary transition-colors duration-200 cursor-pointer">Destinations</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/">
-                    <span className="text-neutral-600 hover:text-primary transition-colors duration-200 cursor-pointer">Deals</span>
-                  </Link>
-                </li>
-              </>
+        {isMobile ? (
+          <div className="flex items-center">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="text-neutral-600 mr-2" 
+              onClick={toggleMobileMenu}
+            >
+              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </Button>
+            
+            {/* Mobile menu */}
+            {mobileMenuOpen && (
+              <div 
+                ref={menuRef}
+                className="absolute top-14 right-4 bg-white shadow-lg rounded-md py-3 px-4 w-48 z-50 transition-all"
+              >
+                <ul className="space-y-3">
+                  <li>
+                    <Link href="/">
+                      <span className="text-neutral-600 hover:text-primary transition-colors duration-200 cursor-pointer block py-1">
+                        <i className="fas fa-hotel mr-2"></i> Hotels
+                      </span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/">
+                      <span className="text-neutral-600 hover:text-primary transition-colors duration-200 cursor-pointer block py-1">
+                        <i className="fas fa-map-marker-alt mr-2"></i> Destinations
+                      </span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/">
+                      <span className="text-neutral-600 hover:text-primary transition-colors duration-200 cursor-pointer block py-1">
+                        <i className="fas fa-tag mr-2"></i> Deals
+                      </span>
+                    </Link>
+                  </li>
+                  <li className="border-t border-neutral-100 pt-2 mt-2">
+                    <Link href="/">
+                      <span className="text-neutral-600 hover:text-primary transition-colors duration-200 cursor-pointer block py-1">
+                        <i className="fas fa-user mr-2"></i> Account
+                      </span>
+                    </Link>
+                  </li>
+                </ul>
+              </div>
             )}
-            <li>
-              <Button variant="ghost" size="sm" className="text-neutral-600 hover:text-primary transition-colors duration-200">
-                <i className="fas fa-user mr-2"></i>
-                {!isMobile && "Account"}
-              </Button>
-            </li>
-          </ul>
-        </nav>
+          </div>
+        ) : (
+          <nav>
+            <ul className="flex space-x-6 items-center">
+              <li>
+                <Link href="/">
+                  <span className="text-neutral-600 hover:text-primary transition-colors duration-200 cursor-pointer">Hotels</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/">
+                  <span className="text-neutral-600 hover:text-primary transition-colors duration-200 cursor-pointer">Destinations</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/">
+                  <span className="text-neutral-600 hover:text-primary transition-colors duration-200 cursor-pointer">Deals</span>
+                </Link>
+              </li>
+              <li>
+                <Button variant="ghost" size="sm" className="text-neutral-600 hover:text-primary transition-colors duration-200">
+                  <i className="fas fa-user mr-2"></i>
+                  Account
+                </Button>
+              </li>
+            </ul>
+          </nav>
+        )}
       </div>
     </header>
   );
