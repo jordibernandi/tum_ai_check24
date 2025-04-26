@@ -22,8 +22,9 @@ export default function Home() {
     propertyType: "any"
   });
   const [simulatedLoading, setSimulatedLoading] = useState(false);
+  const [showResults, setShowResults] = useState(false);
 
-  // Always show dummy hotels at first, then try to get real recommendations if search is performed
+  // Generate sample hotels for when search is performed
   const [dummyHotels] = useState<Hotel[]>(generateSampleHotels(""));
   
   // Query for hotel recommendations
@@ -34,20 +35,21 @@ export default function Home() {
     refetch
   } = useQuery<Hotel[], Error>({ 
     queryKey: ["/api/hotels/recommend", searchParams?.prompt],
-    enabled: !!searchParams?.prompt,
+    enabled: false, // Disable automatic fetching
     queryFn: () => getHotelRecommendations(searchParams?.prompt || ""),
   });
   
   // Combine real loading state with simulated loading
   const isLoading = apiLoading || simulatedLoading;
   
-  // Use searched hotels if available, otherwise show dummy hotels
-  const hotels = searchParams ? (data || []) : dummyHotels;
+  // Use dummy hotels for now since API isn't ready
+  const hotels = showResults ? dummyHotels : [];
 
   // Handle search form submission
   const handleSearch = (data: SearchFormData) => {
-    // Start simulated loading
+    // Start simulated loading and hide any previous results
     setSimulatedLoading(true);
+    setShowResults(false);
     
     // Show toast
     toast({
@@ -61,9 +63,10 @@ export default function Home() {
     // Simulate API delay (2-3 seconds)
     setTimeout(() => {
       setSearchParams(data);
-      // End simulated loading after delay
+      // End simulated loading after delay and show results
       setTimeout(() => {
         setSimulatedLoading(false);
+        setShowResults(true);
       }, 2000);
     }, 1000);
   };

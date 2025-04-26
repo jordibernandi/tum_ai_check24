@@ -26,7 +26,7 @@ export default function HotelList({ hotels, isLoading, error }: HotelListProps) 
   
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
-  // Empty state
+  // Empty state - no search performed
   if (!isLoading && !error && hotels.length === 0) {
     return (
       <motion.div 
@@ -39,10 +39,13 @@ export default function HotelList({ hotels, isLoading, error }: HotelListProps) 
           alt="Travel inspiration" 
           className="w-32 h-32 object-cover rounded-full mx-auto mb-4"
         />
-        <h3 className="text-lg font-medium mb-2">No hotels match your search</h3>
-        <p className="text-neutral-600 mb-4">Try adjusting your search terms or filters for more results.</p>
-        <Button className="bg-primary text-white hover:bg-primary-dark transition-colors duration-200 font-medium px-4 py-2 rounded-lg">
-          Explore Popular Destinations
+        <h3 className="text-lg font-medium mb-2">Ready to discover your ideal stay?</h3>
+        <p className="text-neutral-600 mb-4">Enter your preferences in the search box above to see our recommendations.</p>
+        <Button 
+          onClick={() => document.getElementById("search-section")?.scrollIntoView({ behavior: "smooth" })}
+          className="bg-primary text-white hover:bg-primary-dark transition-colors duration-200 font-medium px-4 py-2 rounded-lg"
+        >
+          Start Searching
         </Button>
       </motion.div>
     );
