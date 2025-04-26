@@ -21,6 +21,7 @@ export default function Home() {
     starRating: "any", 
     propertyType: "any"
   });
+  const [simulatedLoading, setSimulatedLoading] = useState(false);
 
   // Always show dummy hotels at first, then try to get real recommendations if search is performed
   const [dummyHotels] = useState<Hotel[]>(generateSampleHotels(""));
@@ -28,7 +29,7 @@ export default function Home() {
   // Query for hotel recommendations
   const {
     data,
-    isLoading,
+    isLoading: apiLoading,
     error,
     refetch
   } = useQuery<Hotel[], Error>({ 
@@ -37,13 +38,16 @@ export default function Home() {
     queryFn: () => getHotelRecommendations(searchParams?.prompt || ""),
   });
   
+  // Combine real loading state with simulated loading
+  const isLoading = apiLoading || simulatedLoading;
+  
   // Use searched hotels if available, otherwise show dummy hotels
   const hotels = searchParams ? (data || []) : dummyHotels;
 
   // Handle search form submission
   const handleSearch = (data: SearchFormData) => {
-    setSearchParams(data);
-    refetch();
+    // Start simulated loading
+    setSimulatedLoading(true);
     
     // Show toast
     toast({
@@ -53,6 +57,15 @@ export default function Home() {
     
     // Scroll to results
     document.getElementById("results")?.scrollIntoView({ behavior: "smooth" });
+    
+    // Simulate API delay (2-3 seconds)
+    setTimeout(() => {
+      setSearchParams(data);
+      // End simulated loading after delay
+      setTimeout(() => {
+        setSimulatedLoading(false);
+      }, 2000);
+    }, 1000);
   };
 
   // Handle filter changes
