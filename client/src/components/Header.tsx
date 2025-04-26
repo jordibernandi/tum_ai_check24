@@ -21,7 +21,7 @@ export default function Header() {
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         <div className="flex items-center">
           <Link href="/">
-            <a className="flex items-center">
+            <div className="flex items-center cursor-pointer">
               <div className="text-primary font-bold text-2xl mr-2">
                 Check<span className="text-secondary">24</span>
               </div>
@@ -30,7 +30,7 @@ export default function Header() {
                   Hotel Recommendations
                 </span>
               )}
-            </a>
+            </div>
           </Link>
         </div>
         
@@ -40,17 +40,17 @@ export default function Header() {
               <>
                 <li>
                   <Link href="/">
-                    <a className="text-neutral-600 hover:text-primary transition-colors duration-200">Hotels</a>
+                    <span className="text-neutral-600 hover:text-primary transition-colors duration-200 cursor-pointer">Hotels</span>
                   </Link>
                 </li>
                 <li>
                   <Link href="/">
-                    <a className="text-neutral-600 hover:text-primary transition-colors duration-200">Destinations</a>
+                    <span className="text-neutral-600 hover:text-primary transition-colors duration-200 cursor-pointer">Destinations</span>
                   </Link>
                 </li>
                 <li>
                   <Link href="/">
-                    <a className="text-neutral-600 hover:text-primary transition-colors duration-200">Deals</a>
+                    <span className="text-neutral-600 hover:text-primary transition-colors duration-200 cursor-pointer">Deals</span>
                   </Link>
                 </li>
               </>
