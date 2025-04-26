@@ -6,16 +6,16 @@ import { scrollToElement } from "@/lib/utils";
 
 export default function Hero() {
   const isMobile = useMobile();
-  
+
   const handleScrollToSection = (sectionId: string) => (e: React.MouseEvent) => {
     e.preventDefault();
     scrollToElement(sectionId, 80); // 80px offset to account for header height
   };
-  
+
   return (
     <section className="mb-10 bg-gradient-to-r from-primary to-primary-dark rounded-xl overflow-hidden shadow-lg">
       <div className="flex flex-col md:flex-row">
-        <motion.div 
+        <motion.div
           className="p-6 md:p-10 md:w-1/2 flex flex-col justify-center"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -38,7 +38,7 @@ export default function Hero() {
             <Button
               variant="outline"
               size={isMobile ? "default" : "lg"}
-              className="text-white border-white hover:bg-white hover:text-primary transition-all duration-200"
+              className="text-primary border-white hover:bg-white hover:text-primary transition-all duration-200"
               asChild
             >
               <a href="#how-it-works" onClick={handleScrollToSection('how-it-works')} className="flex items-center">
@@ -48,15 +48,15 @@ export default function Hero() {
             </Button>
           </div>
         </motion.div>
-        <motion.div 
+        <motion.div
           className="md:w-1/2 h-60 md:h-auto relative overflow-hidden"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <img 
-            src="https://images.unsplash.com/photo-1582719508461-905c673771fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-            alt="Luxury hotel room" 
+          <img
+            src="https://images.unsplash.com/photo-1582719508461-905c673771fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            alt="Luxury hotel room"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-black bg-opacity-20"></div>

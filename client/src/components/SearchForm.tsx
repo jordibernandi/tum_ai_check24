@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -29,7 +28,7 @@ interface SearchFormProps {
 
 export default function SearchForm({ onSearch }: SearchFormProps) {
   const { toast } = useToast();
-  
+
   const form = useForm<SearchFormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -50,7 +49,7 @@ export default function SearchForm({ onSearch }: SearchFormProps) {
   };
 
   return (
-    <div className="mb-8">
+    <>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <FormField
@@ -66,7 +65,7 @@ export default function SearchForm({ onSearch }: SearchFormProps) {
                       className="w-full px-4 py-6 pr-12 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200"
                     />
                   </FormControl>
-                  <Button 
+                  <Button
                     type="submit"
                     size="icon"
                     variant="ghost"
@@ -101,6 +100,6 @@ export default function SearchForm({ onSearch }: SearchFormProps) {
           ))}
         </div>
       </div>
-    </div>
+    </>
   );
 }

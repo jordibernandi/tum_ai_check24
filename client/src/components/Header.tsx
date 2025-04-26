@@ -9,16 +9,16 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-  
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 10);
     };
-    
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-  
+
   useEffect(() => {
     // Close mobile menu when clicking outside
     const handleClickOutside = (e: MouseEvent) => {
@@ -26,16 +26,16 @@ export default function Header() {
         setMobileMenuOpen(false);
       }
     };
-    
+
     if (mobileMenuOpen) {
       document.addEventListener('mousedown', handleClickOutside);
     }
-    
+
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [mobileMenuOpen]);
-  
+
   // Toggle mobile menu
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -52,27 +52,27 @@ export default function Header() {
               </div>
               {!isMobile && (
                 <span className="text-neutral-500 text-sm pl-2 border-l border-neutral-200">
-                  Hotel Recommendations
+                  Smart Travel Assistant for You
                 </span>
               )}
             </div>
           </Link>
         </div>
-        
+
         {isMobile ? (
           <div className="flex items-center">
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              className="text-neutral-600 mr-2" 
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-neutral-600 mr-2"
               onClick={toggleMobileMenu}
             >
               {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </Button>
-            
+
             {/* Mobile menu */}
             {mobileMenuOpen && (
-              <div 
+              <div
                 ref={menuRef}
                 className="absolute top-14 right-4 bg-white shadow-lg rounded-md py-3 px-4 w-48 z-50 transition-all"
               >

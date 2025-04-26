@@ -3,7 +3,6 @@ import { useQuery } from "@tanstack/react-query";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import SearchForm from "@/components/SearchForm";
-import HotelFilters from "@/components/HotelFilters";
 import HotelList from "@/components/HotelList";
 import HowItWorks from "@/components/HowItWorks";
 import Footer from "@/components/Footer";
@@ -16,32 +15,27 @@ import { hotelImages } from "@/lib/images";
 export default function Home() {
   const { toast } = useToast();
   const [searchParams, setSearchParams] = useState<SearchFormData | null>(null);
-  const [filters, setFilters] = useState<HotelFiltersType>({
-    priceRange: "any",
-    starRating: "any", 
-    propertyType: "any"
-  });
   const [simulatedLoading, setSimulatedLoading] = useState(false);
   const [showResults, setShowResults] = useState(false);
 
   // Generate sample hotels for when search is performed
   const [dummyHotels] = useState<Hotel[]>(generateSampleHotels(""));
-  
+
   // Query for hotel recommendations
   const {
     data,
     isLoading: apiLoading,
     error,
     refetch
-  } = useQuery<Hotel[], Error>({ 
+  } = useQuery<Hotel[], Error>({
     queryKey: ["/api/hotels/recommend", searchParams?.prompt],
     enabled: false, // Disable automatic fetching
     queryFn: () => getHotelRecommendations(searchParams?.prompt || ""),
   });
-  
+
   // Combine real loading state with simulated loading
   const isLoading = apiLoading || simulatedLoading;
-  
+
   // Use dummy hotels for now since API isn't ready
   const hotels = showResults ? dummyHotels : [];
 
@@ -50,16 +44,16 @@ export default function Home() {
     // Start simulated loading and hide any previous results
     setSimulatedLoading(true);
     setShowResults(false);
-    
+
     // Show toast
     toast({
       title: "Searching hotels",
       description: `Finding matches for "${data.prompt}"`,
     });
-    
+
     // Scroll to results
     document.getElementById("results")?.scrollIntoView({ behavior: "smooth" });
-    
+
     // Simulate API delay (2-3 seconds)
     setTimeout(() => {
       setSearchParams(data);
@@ -71,78 +65,44 @@ export default function Home() {
     }, 1000);
   };
 
-  // Handle filter changes
-  const handleFilterChange = (newFilters: HotelFiltersType) => {
-    setFilters(newFilters);
-    
-    toast({
-      title: "Filters applied",
-      description: "Results updated with your filters",
-    });
-  };
-
-  // Apply filters to hotel results
-  const filteredHotels = hotels.filter(hotel => {
-    // Filter by price range
-    if (filters.priceRange !== "any") {
-      if (filters.priceRange === "budget" && hotel.pricePerNight >= 100) return false;
-      if (filters.priceRange === "moderate" && (hotel.pricePerNight < 100 || hotel.pricePerNight > 200)) return false;
-      if (filters.priceRange === "luxury" && hotel.pricePerNight <= 200) return false;
-    }
-    
-    // Filter by star rating
-    if (filters.starRating !== "any") {
-      const minRating = parseInt(filters.starRating);
-      if (hotel.stars < minRating) return false;
-    }
-    
-    // Filter by property type
-    if (filters.propertyType !== "any") {
-      if (!hotel.tags.some(tag => tag.toLowerCase().includes(filters.propertyType.toLowerCase()))) return false;
-    }
-    
-    return true;
-  });
-
   return (
     <div className="flex flex-col min-h-screen bg-neutral-50">
       <Header />
-      
+
       <main className="container mx-auto px-4 py-6 md:py-10 flex-grow">
         <Hero />
-        
+
         <section id="search-section" className="mb-12 scroll-mt-20">
           <Card className="shadow-md bg-white border-neutral-200">
             <CardContent className="p-6 md:p-8 text-foreground">
               <h2 className="text-xl md:text-2xl font-semibold mb-4 text-neutral-800">What are you looking for?</h2>
               <p className="text-neutral-600 mb-6">Describe your ideal hotel or vacation - we'll find perfect matches for you.</p>
-              
+
               <SearchForm onSearch={handleSearch} />
-              <HotelFilters onFilterChange={handleFilterChange} />
             </CardContent>
           </Card>
         </section>
-        
+
         <section id="results" className="mb-10 scroll-mt-20">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-xl md:text-2xl font-semibold">Recommended Hotels</h2>
-            {filteredHotels.length > 0 && !isLoading && (
+            {hotels.length > 0 && !isLoading && (
               <div className="text-sm text-neutral-600">
-                Showing <span className="font-medium">{filteredHotels.length}</span> results
+                Showing <span className="font-medium">{hotels.length}</span> results
               </div>
             )}
           </div>
-          
-          <HotelList 
-            hotels={filteredHotels} 
+
+          <HotelList
+            hotels={hotels}
             isLoading={isLoading}
             error={error instanceof Error ? error : null}
           />
         </section>
-        
+
         <HowItWorks />
       </main>
-      
+
       <Footer />
     </div>
   );
