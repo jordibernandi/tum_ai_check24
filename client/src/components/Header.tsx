@@ -23,7 +23,7 @@ export default function Header() {
           <Link href="/">
             <div className="flex items-center cursor-pointer">
               <div className="text-primary font-bold text-2xl mr-2">
-                Check<span className="text-secondary">24</span>
+                STAY<span className="text-secondary">24</span>
               </div>
               {!isMobile && (
                 <span className="text-neutral-500 text-sm pl-2 border-l border-neutral-200">

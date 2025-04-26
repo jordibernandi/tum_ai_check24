@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
           <div>
             <h3 className="text-xl font-bold mb-4">
-              Check<span className="text-secondary">24</span> Hotels
+              STAY<span className="text-secondary">24</span> Hotels
             </h3>
             <p className="text-neutral-400 mb-4">
               Find your perfect hotel match with our AI-powered recommendation system.
@@ -68,7 +68,7 @@ export default function Footer() {
         </div>
         
         <div className="border-t border-neutral-700 pt-6 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-neutral-400 text-sm">© 2023 Check24 Hotel Recommender. All rights reserved.</p>
+          <p className="text-neutral-400 text-sm">© 2025 STAY24 Hotel Recommender. All rights reserved.</p>
           <div className="flex items-center space-x-4 mt-4 md:mt-0">
             <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" className="h-6" />
             <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" className="h-6" />
