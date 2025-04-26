@@ -90,9 +90,9 @@ export default function Home() {
         <Hero />
         
         <section id="search-section" className="mb-12 scroll-mt-20">
-          <Card className="shadow-md">
-            <CardContent className="p-6 md:p-8">
-              <h2 className="text-xl md:text-2xl font-semibold mb-4">What are you looking for?</h2>
+          <Card className="shadow-md bg-white border-neutral-200">
+            <CardContent className="p-6 md:p-8 text-foreground">
+              <h2 className="text-xl md:text-2xl font-semibold mb-4 text-neutral-800">What are you looking for?</h2>
               <p className="text-neutral-600 mb-6">Describe your ideal hotel or vacation - we'll find perfect matches for you.</p>
               
               <SearchForm onSearch={handleSearch} />

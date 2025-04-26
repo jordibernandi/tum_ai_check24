@@ -23,9 +23,9 @@ export default function HowItWorks() {
 
   return (
     <section id="how-it-works" className="mb-12 scroll-mt-20">
-      <Card>
-        <CardContent className="p-6 md:p-8">
-          <h2 className="text-xl md:text-2xl font-semibold mb-6">How Our Hotel Recommender Works</h2>
+      <Card className="bg-white border-neutral-200">
+        <CardContent className="p-6 md:p-8 text-foreground">
+          <h2 className="text-xl md:text-2xl font-semibold mb-6 text-neutral-800">How Our Hotel Recommender Works</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {steps.map((step, index) => (
@@ -40,7 +40,7 @@ export default function HowItWorks() {
                 <div className="w-16 h-16 rounded-full bg-primary-light flex items-center justify-center mb-4">
                   <i className={`fas ${step.icon} text-primary text-2xl`}></i>
                 </div>
-                <h3 className="font-medium text-lg mb-2">{step.title}</h3>
+                <h3 className="font-medium text-lg mb-2 text-neutral-800">{step.title}</h3>
                 <p className="text-neutral-600">{step.description}</p>
               </motion.div>
             ))}

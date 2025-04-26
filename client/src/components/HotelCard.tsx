@@ -33,7 +33,7 @@ export default function HotelCard({ hotel, index }: HotelCardProps) {
       whileHover={{ y: -5 }}
       className="h-full"
     >
-      <Card className="overflow-hidden h-full transition-shadow duration-300 hover:shadow-lg">
+      <Card className="overflow-hidden h-full transition-shadow duration-300 hover:shadow-lg bg-white border-neutral-200">
         <div className="relative">
           <img 
             src={hotel.image} 
@@ -48,7 +48,7 @@ export default function HotelCard({ hotel, index }: HotelCardProps) {
           )}
         </div>
         
-        <CardContent className="p-5">
+        <CardContent className="p-5 text-foreground">
           <div className="flex justify-between items-start mb-2">
             <h3 className="font-semibold text-lg line-clamp-1">{hotel.name}</h3>
             <div className="flex items-center bg-primary-light text-primary font-bold rounded px-2 py-1 text-sm">
