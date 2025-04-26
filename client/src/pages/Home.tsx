@@ -10,7 +10,7 @@ import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Hotel, HotelFilters as HotelFiltersType, SearchFormData } from "@/types/hotel";
 import { useToast } from "@/hooks/use-toast";
-import { getHotelRecommendations } from "@/lib/api";
+import { getHotelRecommendations, generateSampleHotels } from "@/lib/api";
 import { hotelImages } from "@/lib/images";
 
 export default function Home() {
@@ -22,9 +22,12 @@ export default function Home() {
     propertyType: "any"
   });
 
+  // Always show dummy hotels at first, then try to get real recommendations if search is performed
+  const [dummyHotels] = useState<Hotel[]>(generateSampleHotels(""));
+  
   // Query for hotel recommendations
   const {
-    data: hotels = [],
+    data,
     isLoading,
     error,
     refetch
@@ -33,6 +36,9 @@ export default function Home() {
     enabled: !!searchParams?.prompt,
     queryFn: () => getHotelRecommendations(searchParams?.prompt || ""),
   });
+  
+  // Use searched hotels if available, otherwise show dummy hotels
+  const hotels = searchParams ? (data || []) : dummyHotels;
 
   // Handle search form submission
   const handleSearch = (data: SearchFormData) => {

@@ -23,110 +23,95 @@ export const getHotelRecommendations = async (prompt: string): Promise<Hotel[]> 
 // Utility to create sample hotel data (in case no backend is available)
 export const generateSampleHotels = (prompt: string): Hotel[] => {
   // This would be replaced with actual API data in production
-  const hotels: Hotel[] = [
+  const dummyHotels: Hotel[] = [
     {
-      id: 1,
-      name: "The Grand Resort & Spa",
-      location: "Bali",
-      country: "Indonesia",
+      id: 100,
+      name: "STAY24 Signature Hotel",
+      location: "Berlin",
+      country: "Germany",
       stars: 5,
-      rating: 9.2,
-      ratingText: "Excellent",
-      price: 349,
-      pricePerNight: 349,
-      description: "Luxury beachfront resort with stunning ocean views, multiple infinity pools, and award-winning restaurants.",
-      image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      tags: ["Beachfront", "Pool", "Spa", "Free WiFi"],
+      rating: 9.7,
+      ratingText: "Exceptional",
+      price: 289,
+      pricePerNight: 289,
+      description: "Our flagship luxury hotel featuring elegant rooms, state-of-the-art facilities, and personalized service.",
+      image: "",
+      tags: ["Luxury", "Business", "City Center", "Fine Dining"],
       badge: {
-        text: "Best Value",
+        text: "STAY24 Pick",
         type: "bestValue"
       }
     },
     {
-      id: 2,
-      name: "Urban Boutique Hotel",
-      location: "Barcelona",
-      country: "Spain",
-      stars: 4,
-      rating: 8.8,
-      ratingText: "Very Good",
-      price: 189,
-      pricePerNight: 189,
-      description: "Modern boutique hotel located in the heart of Barcelona with easy access to major attractions and family amenities.",
-      image: "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      tags: ["City Center", "Rooftop Bar", "Family-friendly"],
-      badge: {
-        text: "20% OFF",
-        type: "discount"
-      }
-    },
-    {
-      id: 3,
-      name: "Parisian Elegance Hotel",
-      location: "Paris",
-      country: "France",
-      stars: 4,
-      rating: 9.0,
-      ratingText: "Excellent",
-      price: 229,
-      pricePerNight: 229,
-      description: "Charming boutique hotel in central Paris, just minutes from the Louvre and other major attractions.",
-      image: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      tags: ["Boutique", "Restaurant", "Near Attractions"]
-    },
-    {
-      id: 4,
-      name: "Alpine Mountain Resort",
-      location: "Swiss Alps",
-      country: "Switzerland",
-      stars:
-5,
+      id: 101,
+      name: "Ocean Paradise Resort",
+      location: "Maldives",
+      country: "Maldives",
+      stars: 5,
       rating: 9.5,
       ratingText: "Exceptional",
-      price: 399,
-      pricePerNight: 399,
-      description: "Luxury all-inclusive mountain resort featuring world-class spa, fine dining, and stunning Alpine views.",
-      image: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      tags: ["All-inclusive", "Spa", "Mountain View"],
+      price: 599,
+      pricePerNight: 599,
+      description: "Stunning overwater bungalows with private pools and direct access to crystal clear waters.",
+      image: "",
+      tags: ["Overwater", "Private Pool", "All-Inclusive", "Honeymoon"],
       badge: {
-        text: "Popular",
+        text: "Top Rated",
         type: "popular"
       }
     },
     {
-      id: 5,
-      name: "City Central Budget Hotel",
-      location: "London",
-      country: "UK",
-      stars: 3,
-      rating: 7.9,
-      ratingText: "Good",
-      price: 119,
-      pricePerNight: 119,
-      description: "Affordable hotel in central London, walking distance to major attractions and public transport.",
-      image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      tags: ["Budget-friendly", "City Center", "Free Breakfast"],
+      id: 102,
+      name: "Historic Old Town Hotel",
+      location: "Prague",
+      country: "Czech Republic",
+      stars: 4,
+      rating: 8.9,
+      ratingText: "Excellent",
+      price: 175,
+      pricePerNight: 175,
+      description: "Charming boutique hotel in a restored medieval building in the heart of Prague's Old Town.",
+      image: "",
+      tags: ["Historic", "Boutique", "Central Location", "Breakfast Included"],
+      badge: {
+        text: "15% OFF",
+        type: "discount"
+      }
+    },
+    {
+      id: 103,
+      name: "Desert Oasis Resort",
+      location: "Dubai",
+      country: "UAE",
+      stars: 5,
+      rating: 9.2,
+      ratingText: "Excellent",
+      price: 450,
+      pricePerNight: 450,
+      description: "Luxurious desert retreat with private villas, infinity pools, and traditional Arabic architecture.",
+      image: "",
+      tags: ["Desert Views", "Private Villas", "Spa", "5-Star Dining"],
       badge: {
         text: "Flash Deal",
         type: "flashDeal"
       }
     },
     {
-      id: 6,
-      name: "Mountain Trail Lodge",
-      location: "Colorado",
-      country: "USA",
+      id: 104,
+      name: "Mountain View Lodge",
+      location: "Banff",
+      country: "Canada",
       stars: 4,
-      rating: 8.7,
+      rating: 8.8,
       ratingText: "Very Good",
-      price: 199,
-      pricePerNight: 199,
-      description: "Rustic lodge surrounded by nature with direct access to hiking trails and pet-friendly accommodations.",
-      image: "https://images.unsplash.com/photo-1563911302283-d2bc129e7570?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      tags: ["Pet-friendly", "Hiking Trails", "Nature"]
+      price: 245,
+      pricePerNight: 245,
+      description: "Cozy mountain lodge with panoramic views of the Canadian Rockies and access to premium ski slopes.",
+      image: "",
+      tags: ["Mountain Views", "Skiing", "Fireplace", "Nature Trails"],
     }
   ];
-
-  // Return filtered hotels based on prompt if needed
-  return hotels;
+  
+  // Return the dummy hotels instead of the sample hotels
+  return dummyHotels;
 };

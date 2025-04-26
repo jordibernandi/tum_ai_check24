@@ -35,11 +35,17 @@ export default function HotelCard({ hotel, index }: HotelCardProps) {
     >
       <Card className="overflow-hidden h-full transition-shadow duration-300 hover:shadow-lg bg-white border-neutral-200">
         <div className="relative">
-          <img 
-            src={hotel.image} 
-            alt={hotel.name} 
-            className="w-full h-48 object-cover" 
-          />
+          {hotel.image ? (
+            <img 
+              src={hotel.image} 
+              alt={hotel.name} 
+              className="w-full h-48 object-cover" 
+            />
+          ) : (
+            <div className="w-full h-48 bg-neutral-100 flex items-center justify-center">
+              <i className="fas fa-hotel text-4xl text-neutral-400"></i>
+            </div>
+          )}
           {hotel.badge && (
             <div className={`absolute top-3 right-3 px-2 py-1 rounded text-sm font-medium ${getBadgeColor(hotel.badge.type)}`}>
               <i className={`fas ${hotel.badge.type === 'bestValue' ? 'fa-tag' : hotel.badge.type === 'discount' ? 'fa-percentage' : hotel.badge.type === 'popular' ? 'fa-fire' : 'fa-bolt'} mr-1`}></i>
