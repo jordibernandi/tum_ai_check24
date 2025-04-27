@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import SearchForm from "@/components/SearchForm";
@@ -9,61 +9,45 @@ import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Hotel, HotelFilters as HotelFiltersType, SearchFormData } from "@/types/hotel";
 import { useToast } from "@/hooks/use-toast";
-import { getHotelRecommendations, generateSampleHotels } from "@/lib/api";
+import { getHotelRecommendations } from "@/lib/api"; // Removed generateSampleHotels import
 import { hotelImages } from "@/lib/images";
 
 export default function Home() {
   const { toast } = useToast();
-  const [searchParams, setSearchParams] = useState<SearchFormData | null>(null);
-  const [simulatedLoading, setSimulatedLoading] = useState(false);
-  const [showResults, setShowResults] = useState(false);
+  const [searchResults, setSearchResults] = useState<{ status: number, hotels: Hotel[] } | null>(null);
 
-  // Generate sample hotels for when search is performed
-  const [dummyHotels] = useState<Hotel[]>(generateSampleHotels(""));
+  // Remove dummyHotels state
+  // const [dummyHotels] = useState<Hotel[]>(generateSampleHotels(""));
 
-  // Query for hotel recommendations
   const {
-    data,
-    isLoading: apiLoading,
-    error,
-    refetch
-  } = useQuery<Hotel[], Error>({
-    queryKey: ["/api/hotels/recommend", searchParams?.prompt],
-    enabled: false, // Disable automatic fetching
-    queryFn: () => getHotelRecommendations(searchParams?.prompt || ""),
+    mutate: searchHotels,
+    isPending,
+    error
+  } = useMutation({
+    mutationFn: (prompt: string) => getHotelRecommendations(prompt),
+    onSuccess: (data: { status: number, hotels: Hotel[] }) => {
+      setSearchResults(data);
+    }
   });
 
-  // Combine real loading state with simulated loading
-  const isLoading = apiLoading || simulatedLoading;
-
-  // Use dummy hotels for now since API isn't ready
-  const hotels = showResults ? dummyHotels : [];
-
   // Handle search form submission
-  const handleSearch = (data: SearchFormData) => {
-    // Start simulated loading and hide any previous results
-    setSimulatedLoading(true);
-    setShowResults(false);
-
+  const handleSearch = (formData: SearchFormData) => {
+    console.log("handleSearch");
     // Show toast
     toast({
       title: "Searching hotels",
-      description: `Finding matches for "${data.prompt}"`,
+      description: `Finding matches for "${formData.prompt}"`,
     });
 
     // Scroll to results
     document.getElementById("results")?.scrollIntoView({ behavior: "smooth" });
 
-    // Simulate API delay (2-3 seconds)
-    setTimeout(() => {
-      setSearchParams(data);
-      // End simulated loading after delay and show results
-      setTimeout(() => {
-        setSimulatedLoading(false);
-        setShowResults(true);
-      }, 2000);
-    }, 1000);
+    // Call the API once with the search prompt
+    searchHotels(formData.prompt);
   };
+
+  console.log("IS PENDING", isPending)
+  console.log("SEARCH", searchResults)
 
   return (
     <div className="flex flex-col min-h-screen bg-neutral-50">
@@ -84,18 +68,18 @@ export default function Home() {
         </section>
 
         <section id="results" className="mb-10 scroll-mt-20">
-          <div className="flex justify-between items-center mb-6">
+          {/* <div className="flex justify-between items-center mb-6">
             <h2 className="text-xl md:text-2xl font-semibold">Recommended Hotels</h2>
-            {hotels.length > 0 && !isLoading && (
+            {searchResults && searchResults?.hotels.length > 0 && !isPending && (
               <div className="text-sm text-neutral-600">
-                Showing <span className="font-medium">{hotels.length}</span> results
+                Showing <span className="font-medium">{searchResults.hotels.length}</span> results
               </div>
             )}
-          </div>
+          </div> */}
 
           <HotelList
-            hotels={hotels}
-            isLoading={isLoading}
+            data={searchResults as { status: number, hotels: Hotel[] }}
+            isPending={isPending}
             error={error instanceof Error ? error : null}
           />
         </section>

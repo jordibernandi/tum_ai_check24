@@ -8,15 +8,14 @@ import { Button } from "@/components/ui/button";
 import { Search, Mic, MicOff } from "lucide-react";
 import { motion } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
-import { SearchFormData } from "@/types/hotel"; // Assuming this type is already defined in your project
+import { SearchFormData } from "@/types/hotel";
 
 const samplePrompts = [
-  "Luxury beachfront resort in Maldives",
-  "Family-friendly hotel with pool in Barcelona",
-  "Boutique hotel in Paris near attractions",
-  "All-inclusive mountain resort with spa",
-  "Budget-friendly hotel in London city center",
-  "Pet-friendly hotel near hiking trails"
+  "A nice hotel with atleast 6 rating",
+  "I'm travelling with a dog and need a parking space.",
+  "Stylish, modern hotel that not only offers great design but also serves an good breakfast.",
+  "Find me a hotel with rating at least 9.3 and cheaper than 40 EUR per night.",
+  "Find me a hotel for 50 EUR per night near to beach and luxury breakfast",
 ];
 
 const formSchema = z.object({

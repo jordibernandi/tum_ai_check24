@@ -1,20 +1,17 @@
 export interface Hotel {
-  id: number;
-  name: string;
-  location: string;
-  country: string;
-  stars: number;
+  hotel_name: string;
+  locationname: string;
+  // country: string;
+  starcategory: number; // stars
   rating: number;
-  ratingText: string;
-  price: number;
-  pricePerNight: number;
-  description: string;
+  pricepernight: number;
   image: string;
-  tags: string[];
-  badge?: {
-    text: string;
-    type: 'bestValue' | 'discount' | 'popular' | 'flashDeal';
-  };
+  explanability: string;
+  // tags: string[];
+  // badge?: {
+  //   text: string;
+  //   type: 'bestValue' | 'discount' | 'popular' | 'flashDeal';
+  // };
 }
 
 export interface HotelFilters {

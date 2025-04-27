@@ -9,7 +9,7 @@ export default function Hero() {
 
   const handleScrollToSection = (sectionId: string) => (e: React.MouseEvent) => {
     e.preventDefault();
-    scrollToElement(sectionId, 80); // 80px offset to account for header height
+    scrollToElement(sectionId, 80);
   };
 
   return (
@@ -55,7 +55,7 @@ export default function Hero() {
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           <img
-            src="https://images.unsplash.com/photo-1582719508461-905c673771fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            src="../../public/images/luxury-hotel.avif"
             alt="Luxury hotel room"
             className="w-full h-full object-cover"
           />
